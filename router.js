@@ -391,12 +391,12 @@ router.post('/logout', (req, res) => {
         req.session.destroy(function (err) {
             if (err) {
                 console.log(err);
+
             } else {
-                res.redirect('/');
+                console.log("logout성공")
+
             }
         })
-    } else {
-        res.redirect('/');
     }
 })
 
@@ -424,10 +424,8 @@ router.put('/updateSetting/:email', (req, res) => {
                 console.log(err)
             }
             else {
-                console.log(results)
-
+                //console.log(results)
                 res.json(results)
-
             }
         })
 })

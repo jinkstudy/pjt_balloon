@@ -10,17 +10,20 @@ export const setUser = (email) => {
     )
 }
 
-export const checkSession = () => {
-    console.log("action checkSession() 호출")
+export const checkSession = () => dispatch => {
+    console.log("action checkSession 호출")
     return (
         fetch('/api/checksession')
             .then(function (response) {
                 return response.json()
             })
             .then(function (sess) {
-                //console.log(sess)
+                console.log("action cheksession sess확인", sess)
                 if (sess.userid) {
-                    return { type: CHECK_SESSION, payload: { id: sess.userid, name: sess.name, email: sess.email } }
+                    dispatch({ type: CHECK_SESSION, payload: { id: sess.userid, name: sess.name, email: sess.email } }
+                    )
+                } else {
+                    dispatch({ type: CHECK_SESSION, payload: null })
                 }
             })
     )

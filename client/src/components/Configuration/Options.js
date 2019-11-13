@@ -43,7 +43,7 @@ export default function Options({ user }) {
   // 회원 설정 db에서 가져오기.
   const get_settings = () => {
 
-    console.log("Option get_settings", user.email)
+    //console.log("Option get_settings", user.email)
     fetch(`/getSetting/${user.email}`)
       .then(function (response) {
         return response.json()
@@ -52,7 +52,7 @@ export default function Options({ user }) {
         // userPreferences = setting
         setChecked(setting)
       })
-    console.log(checked)
+    //console.log(checked)
   }
 
   //변경 시 db에 설정값 update 하기
@@ -69,7 +69,7 @@ export default function Options({ user }) {
     })
     let data = { settings: settings }
 
-    console.log("updateSetting data", data)
+    // console.log("updateSetting data", data)
 
     // update api 호출
     fetch(`/updateSetting/${user.email}`, {

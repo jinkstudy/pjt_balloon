@@ -9,7 +9,9 @@ const initailState = {
 }
 
 const memberReducer = (state = initailState, action) => {
+    console.log("memberReducer ,action.type:", action.type)
     switch (action.type) {
+
         case SET_USER: {
 
             const newState = { ...state, member: action.payload }

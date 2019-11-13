@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link } from "react-router-dom";
-import {  checkSession } from '../../store/actions/members'
+import { checkSession } from '../../store/actions/members'
 import { connect } from "react-redux";
 
 class LogOut extends React.Component {
@@ -19,17 +19,17 @@ class LogOut extends React.Component {
 
   loggedOut = () => {
     console.log('trying to logout!')
-    const {dispatch} = this.props
+    const { dispatch } = this.props
 
-    return (fetch('/logout', {
-      method: 'get',
+    fetch('/logout', {
+      method: 'post',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     })
-    .then(dispatch(checkSession))
-    );
+      .then(dispatch(checkSession()))
+      .then(this.props.history.push('/'))
   };
 
   handleClose = () => {
@@ -57,12 +57,12 @@ class LogOut extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-          <Link
-            to="/config"
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <Button onClick={this.handleClose} color="secondary">
-              취소
+            <Link
+              to="/config"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button onClick={this.handleClose} color="secondary">
+                취소
             </Button>
             </Link>
             <Button color="primary" onClick={this.loggedOut}>확인</Button>
@@ -73,4 +73,6 @@ class LogOut extends React.Component {
   }
 }
 
-export default connect() (LogOut);
+
+
+export default connect()(LogOut);
