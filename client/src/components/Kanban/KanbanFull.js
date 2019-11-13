@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import KanbanList from './KanbanList'
 import styled from 'styled-components'
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
 import { get_kanbanList, add_list } from '../../store/actions/Kanban/kanbanList'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -160,7 +159,8 @@ class KanbanFull extends Component {
 
     render() {
         let newList
-        const { kanbans, projects, project_id } = this.props
+
+        const { kanbans, projects, project_id, user } = this.props
         if (this.state.newListOpen) {
             newList = this.addInputForm()
         }

@@ -18,9 +18,9 @@ export const checkSession = () => {
                 return response.json()
             })
             .then(function (sess) {
-                console.log(sess.email)
-                if (sess.email) {
-                    return { type: CHECK_SESSION, payload: sess.email }
+                //console.log(sess)
+                if (sess.userid) {
+                    return { type: CHECK_SESSION, payload: { id: sess.userid, name: sess.name, email: sess.email } }
                 }
             })
     )

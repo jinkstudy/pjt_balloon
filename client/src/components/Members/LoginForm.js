@@ -22,87 +22,103 @@ import { setUser, checkSession } from '../../store/actions/members'
 
 const styles = {
   root: {
-    height: '100vh',
+    height: "100vh"
+  },
+  background: {
+    background: "#F9EFED",
+    padding: '25px'
+  },
+  textField: {
+    background: "white"
+  },
+  welcome: {
+    background: "#F9EFED",
+    padding: "10px",
+    border: 'none'
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center"
   },
   paper: {
-    margin: '20px',
-    marginTop: '30px',
-    display: 'flex',
-    flexDirection: 'column',
+    margin: "20px",
+    marginTop: "30px",
+    display: "flex",
+    flexDirection: "column",
+    background: "#F9EFED",
+    border: "none"
   },
   form: {
-    width: '100%',
+    width: "100%"
   },
   logo: {
-    width: '100%',
-    height: 'auto'
+    width: "100%",
+    height: "auto"
   },
 
   loginTitle: {
-    width: '100%',
-    display: 'flex',
+    width: "100%",
+    display: "flex"
   },
   dividerlow: {
-    width: '90%',
-    marginTop: '5px',
+    width: "90%",
+    marginTop: "5px"
   },
   signTyp: {
-    width: '10%',
-    color: '#868e96',
+    width: "10%",
+    color: "#868e96"
   },
   submitForm: {
-    display: 'inline',
-    textAlign: "center",
+    display: "inline",
+    textAlign: "center"
   },
   submit: {
-    width: '145px',
-    height: '55px',
-    margin: '10px',
-    fontWeight: 'bold',
+    width: "145px",
+    height: "55px",
+    margin: "10px",
+    fontWeight: "bold"
   },
   signupForm: {
-    width: '430px',
-    height: '600px'
+    width: "430px",
+    height: "600px",
+    background: "#F9EFED",
+    padding: '20px'
   },
 
   decisionForm: {
-    marginRight: '20px',
+    marginRight: "20px"
   },
 
   contentForm: {
-    marginTop: '-35px',
+    marginTop: "-35px"
   },
 
   signup: {
-    width: '105px',
-    height: '45px',
-    fontWeight: 'bold',
-    marginRight: '10px'
+    width: "105px",
+    height: "45px",
+    fontWeight: "bold",
+    marginRight: "10px"
   },
   cencle: {
-    width: '105px',
-    height: '45px',
-    fontWeight: 'bold',
+    width: "105px",
+    height: "45px",
+    fontWeight: "bold"
   },
 
   titleForm: {
-    display: 'flex'
+    display: "flex"
   },
   dividerlow: {
-    width: '83%',
-    marginTop: '5px',
+    width: "83%",
+    marginTop: "5px"
   },
   signTyp: {
-    textAlign: 'right',
-    marginLeft: '5px',
-    color: '#868e96',
-  },
+    textAlign: "right",
+    marginLeft: "5px",
+    color: "#868e96"
+  }
 };
 
 class LoginForm extends Component {
@@ -249,25 +265,34 @@ class LoginForm extends Component {
   render() {
     return (
       <Grid container component="main" style={styles.root}>
-
         <CssBaseline />
 
         {/* 왼쪽 이미지 그리드 */}
         <Grid item xs={false} sm={4} md={7} style={styles.image} />
 
         {/* 로그인 폼 그리드 */}
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+          style={styles.background}
+        >
           {/* 로그인 폼 상단 */}
           <div style={styles.paper}>
-
             <img src={Logo} alt="logo" style={styles.logo} />
 
             {/* 로그인 문구 */}
-            <Typography variant="h6">
-              Welcome back!<br />
+
+            <Typography variant="h6" style={styles.welcome}>
+              Welcome back!
+                <br />
               Please login to your account
-            </Typography>
+              </Typography>
+
 
             {/* 로그인 타이틀 */}
             <div style={styles.loginTitle}>
@@ -278,7 +303,6 @@ class LoginForm extends Component {
             </div>
 
             <form style={styles.form} noValidate>
-
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -291,6 +315,7 @@ class LoginForm extends Component {
                 autoFocus
                 value={this.state.email}
                 onChange={this.handleValueChange}
+                style={styles.textField}
               />
 
               <TextField
@@ -305,6 +330,7 @@ class LoginForm extends Component {
                 autoComplete="password"
                 value={this.state.password}
                 onChange={this.handleValueChange}
+                style={styles.textField}
               />
 
               <Grid container>
@@ -325,17 +351,27 @@ class LoginForm extends Component {
               {/* submit 폼 */}
               <Grid container style={styles.submitForm}>
                 <Grid item>
-                  <Fab variant="extended" color="primary" aria-label="login" style={styles.submit} onClick={this.handleLogin}>
+                  <Fab
+                    variant="extended"
+                    color="primary"
+                    aria-label="login"
+                    style={styles.submit}
+                    onClick={this.handleLogin}
+                  >
                     로그인
-                        </Fab>
+                  </Fab>
 
-                  <Fab variant="extended" aria-label="signup" style={styles.submit} onClick={this.handleClickOpen}>
+                  <Fab
+                    variant="extended"
+                    aria-label="signup"
+                    style={styles.submit}
+                    onClick={this.handleClickOpen}
+                  >
                     회원가입
-                </Fab>
+                  </Fab>
 
                   {/* 회원가입 폼 */}
                   <Dialog open={this.state.open} onClose={this.handleClose}>
-
                     <form style={styles.signupForm}>
                       <DialogTitle>
                         <img src={Logo} alt="logo" style={styles.logo} />
@@ -344,7 +380,7 @@ class LoginForm extends Component {
                           <Divider style={styles.dividerlow} />
                           <Typography variant="body2" style={styles.signTyp}>
                             회원정보
-                                </Typography>
+                          </Typography>
                         </div>
                       </DialogTitle>
 
@@ -362,6 +398,7 @@ class LoginForm extends Component {
                             autoFocus
                             value={this.state.email}
                             onChange={this.handleValueChange}
+                            style={styles.textField}
                           />
 
                           <TextField
@@ -376,13 +413,14 @@ class LoginForm extends Component {
                             autoComplete="password"
                             value={this.state.password}
                             onChange={this.handleValueChange}
+                            style={styles.textField}
                           />
 
                           <div style={styles.titleForm}>
                             <Divider style={styles.dividerlow} />
                             <Typography variant="body2" style={styles.signTyp}>
                               추가정보
-                                    </Typography>
+                            </Typography>
                           </div>
 
                           <TextField
@@ -396,8 +434,8 @@ class LoginForm extends Component {
                             autoComplete="name"
                             value={this.state.name}
                             onChange={this.handleValueChange}
+                            style={styles.textField}
                           />
-
                         </DialogContent>
                       </div>
 
@@ -412,7 +450,7 @@ class LoginForm extends Component {
                               onClick={this.handleFormSubmit}
                             >
                               회원가입
-                                    </Fab>
+                            </Fab>
 
                             <Fab
                               variant="extended"
@@ -421,22 +459,19 @@ class LoginForm extends Component {
                               onClick={this.handleClose}
                             >
                               취소
-                                    </Fab>
+                            </Fab>
                           </Grid>
                         </DialogActions>
                       </div>
                     </form>
-
                   </Dialog>
                 </Grid>
               </Grid>
-
             </form>
           </div>
-
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 

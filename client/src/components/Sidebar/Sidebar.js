@@ -19,8 +19,8 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AccountInfo from './AccountInfo';
-
+import ProjectInfo from './ProjectInfo';
+// import CorrImg from './CorrImg'
 
 const styles = {
   dividermax: {
@@ -32,13 +32,31 @@ const styles = {
   },
   changebutton: {
     color: "white"
-  }
+  },
+
+  popup: {
+    padding: '5px',
+    width: '380px',
+    height: '100%',
+    backgroundColor: '#e57076'
+  },
+  profile: {
+    backgroundColor: 'green',
+    display: 'flex',
+  },
+  corrImg: {
+    width: '120px',
+  },
+  myInfo: {
+    backgroundColor: 'orange',
+  },
 };
 
 
 
 class Sidebar extends Component {
   constructor(props) {
+
     super(props);
     this.state = {
       isSidebarExpanded: true,
@@ -48,9 +66,15 @@ class Sidebar extends Component {
     }
   };
 
+
+
+
+
   // 기본 사이드바
   sidebarExpanded = () => (
-    <div className="sidebar">
+
+
+    < div className="sidebar" >
       <div className="expanded">
         <Button
           style={styles.changebutton}
@@ -93,29 +117,31 @@ class Sidebar extends Component {
                     }}
                   >
 
+
                     {/* 팝업창 */}
                     <div style={styles.popup}>
 
-                      {/* 사진 수정 */}
-                      <div style={styles.img}>
+                      {/* 프로필 */}
+                      <div style={styles.profile}>
 
-                        <input style={styles.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
-                        <label htmlFor="raised-button-file">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            component="span"
-                            name="file"
-                          >
-                            사진수정
-                        </Button>
-                        </label>
-                      </div> {/* 사진수정 끝 */}
+                        {/* 사진 수정 */}
+                        <div style={styles.corrImg}>
+
+                          {/* <CorrImg /> */}
+
+                        </div> {/* 사진수정 끝 */}
+
+                        {/* 내정보 */}
+                        <div className="myInfo" style={styles.myInfo} >
+                          {this.props.user.email}
+                          {this.props.user.name}
+                        </div>
+
+
+                      </div> {/* 프로필 끝 */}
 
                       {/* 프로젝트정보 */}
-                      <div style={styles.projectInfo}>
-                        <AccountInfo />
-                      </div> {/* 프로젝트정보 끝 */}
+                      <ProjectInfo />
 
                     </div> {/* 팝업창 끝 */}
 
@@ -143,7 +169,7 @@ class Sidebar extends Component {
 
           <div className="listitem">
 
-            <Link to="/kanban" style={{ textDecoration: 'none', color: 'white' }}>
+            <Link to={`/kanban/${this.props.user.id}`} style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem button>
                 <DeveloperBoardRoundedIcon fontSize="large" />
                 <div className="listitemtext">
@@ -156,7 +182,7 @@ class Sidebar extends Component {
 
           <Divider style={styles.dividermax} />
           <div className="listitem">
-            <Link to="/chat" style={{ textDecoration: 'none', color: 'white' }}>
+            <Link to={`/chat/${this.props.user.id}`} style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem button>
                 <MessageRoundedIcon fontSize="large" />
                 <div className="listitemtext">
@@ -167,7 +193,7 @@ class Sidebar extends Component {
           </div>
           <Divider style={styles.dividermax} />
           <div className="listitem">
-            <Link to="/config" style={{ textDecoration: 'none', color: 'white' }}>
+            <Link to={`/config/${this.props.user.id}`} style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem button>
                 <SettingsRoundedIcon fontSize="large" />
                 <div className="listitemtext">
@@ -228,6 +254,8 @@ class Sidebar extends Component {
     </div>
   ); // after button click, isSidebarExpanded => true
   render() {
+
+    console.log("Sidebar user", this.props.user)
     const { isSidebarExpanded } = this.state;
     return (
       <div className="app">

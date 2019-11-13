@@ -125,7 +125,20 @@ mysqlConnection.connect((err) => {
 })
 
 
-
+// DB에서 회원 id가 포함된 주소록 멤버 아이디 가져오기 
+router.get('/getmember', (req, res) => {
+    mysqlConnection.query(`SELECT member_id, project_id FROM project_members WHERE project_id ='201911031025-1'`,
+        (err, rows, fields) => {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                const address = rows
+                res.json(rows)
+                // console.log(addressList)
+            }
+        })
+})
 
 
 
@@ -238,6 +251,7 @@ router.get('/kanbanList/:project_id', (req, res) => {
 // 새로운 project 생성하기.
 router.post("/newProject", (req, res) => {
     const body = req.body
+    let memberid
     //  console.log("server newProject==> body", req)
     mysqlConnection.query("insert into projects(id,name,type,image_id) values (?,?,?,1) ", [body.id, body.name, body.type], (err, result) => {
         if (!err) {
@@ -247,7 +261,7 @@ router.post("/newProject", (req, res) => {
             console.log(err)
         }
     })
-    mysqlConnection.query(" insert into project_members (member_id,project_id) values (1,?) ", [body.id], (err, result) => {
+    mysqlConnection.query(" insert into project_members (member_id,project_id) values (?,?) ", [body.userid, body.id], (err, result) => {
         if (!err) {
             console.log("project_members 입력 성공")
             //res.redirect('/')
@@ -255,8 +269,34 @@ router.post("/newProject", (req, res) => {
             console.log(err)
         }
     })
+    if (body.member) {
+        mysqlConnection.query("select id from members where email=?", [body.member], (err, rows, fields) => {
+            if (!err) {
+                memberid = rows[0].id
+                console.log("select", memberid)
+                mysqlConnection.query(" insert into project_members (member_id,project_id) values (?,?) ", [memberid, body.id], (err, result) => {
+                    if (!err) {
+                        console.log("project_members 입력 성공2")
+                        //res.redirect('/')
+                    } else {
+                        console.log(err)
+                    }
+                })
+            } else {
+                console.log(err)
+            }
 
+        })
 
+        // mysqlConnection.query(" insert into project_members (member_id,project_id) values (?,?) ", [memberid, body.id], (err, result) => {
+        //     if (!err) {
+        //         console.log("project_members 입력 성공2")
+        //         //res.redirect('/')
+        //     } else {
+        //         console.log(err)
+        //     }
+        // })
+    }
 
 
 })
@@ -298,19 +338,22 @@ router.post('/login', (req, res) => {
     mysqlConnection.query("SELECT * FROM members WHERE email=?", [body.email], (err, rows, fields) => {
 
         if (!err) {
-            let members = rows[0]
-
+            let member = rows[0]
+            console.log(member)
             // 고객정보가 있으면
-            if (members) {
+            if (member) {
 
                 // 고객정보 password와 입력한 password를 확인
-                if (members.password === body.password) {
+                if (member.password === body.password) {
                     console.log('로그인성공')
 
                     // email 세션 저장
                     sess.email = body.email;
+                    sess.name = member.name;
+                    sess.userid = member.id;
+
                     sess.save(() => {
-                        //console.log("로그인", sess)
+                        console.log("로그인", sess)
                     })
                     res.json(sess)
 

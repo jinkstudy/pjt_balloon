@@ -13,7 +13,7 @@ const styles = {
 
 
 
-const Chatlist = ({ chats }) => {
+const Chatlist = ({ chats, user }) => {
 
   // const [chatlists, setChatlists] = useState([]);
 
@@ -61,7 +61,7 @@ const Chatlist = ({ chats }) => {
             </ListItem>
           </div>
           <Divider style={styles.divider} />
-          {chats.length !== 0 ? chats.map(chatroom => <Chatlistitem key={chatroom.room_id} room={chatroom.room_id} name='홍길자' />) : null}
+          {chats.length !== 0 ? chats.map(chatroom => <Chatlistitem key={chatroom.room_id} room={chatroom.room_id} user={user} />) : null}
           {/* <Chatlistitem room={room} name={name}/> */}
         </List>
       </div>

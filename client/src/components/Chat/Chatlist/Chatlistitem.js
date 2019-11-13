@@ -24,10 +24,10 @@ const styles = {
 
 
 
-const Chatlistitem = ({ room, name }) => (
+const Chatlistitem = ({ room, user }) => (
 
   <div className="listitem">
-    <Link onClick={event => (!name || !room) ? event.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
+    <Link onClick={event => (!user || !room) ? event.preventDefault() : null} to={`/chat/${user.id}?name=${user.name}&room=${room}`}>
       <ListItem button alignItems="flex-start" >
         <ListItemAvatar>
           <Avatar alt="Minseok Oh"

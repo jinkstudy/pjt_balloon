@@ -4,7 +4,7 @@ import { CHECK_SESSION } from '../actions/constants'
 
 const initailState = {
     member: '',
-    session: '',
+    user: '',
 
 }
 
@@ -18,7 +18,7 @@ const memberReducer = (state = initailState, action) => {
             return newState
         }
         case CHECK_SESSION: {
-            const newState = { ...state, session: action.payload }
+            const newState = { ...state, user: action.payload }
             console.log("memberReducer CHECK_SESSION ,action.payload:", newState)
             return newState
         }

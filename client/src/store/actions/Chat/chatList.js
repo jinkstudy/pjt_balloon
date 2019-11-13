@@ -5,6 +5,7 @@ export const get_chatlist = (member_id) => dispatch => {
     return (
         fetch(`/api/chats/${member_id}`)
             .then(function (response) {
+
                 return response.json()
             })
             .then(function (myJson) {
@@ -17,5 +18,6 @@ export const get_chatlist = (member_id) => dispatch => {
 
 
             })
+            .catch(err => console.log(err))
     )
 }

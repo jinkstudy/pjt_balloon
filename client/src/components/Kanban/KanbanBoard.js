@@ -24,7 +24,7 @@ class KanbanBoard extends Component {
     let KanbanBoard
 
     if (this.props.projects.cnt === 0) {
-      KanbanBoard = <InitKanbanBoard />
+      KanbanBoard = <InitKanbanBoard user={this.props.user} />
     } else {
 
       let current_Id;
@@ -36,21 +36,22 @@ class KanbanBoard extends Component {
         else current_Id = this.props.projects.projectlists[0].project_id
 
         console.log("CreateKanbanBoard renderKanban 호출 current_Id", current_Id)
+        console.log("CreateKanbanBoard renderKanban 호출 current_Id", current_Id)
       }
 
-      KanbanBoard = <KanbanFull project_id={current_Id} />
+      KanbanBoard = <KanbanFull project_id={current_Id} user={this.props.user} />
     }
     return KanbanBoard
   }
 
   componentDidMount() {
     console.log("KanbanBoard render componentDidMount")
-    this.props.get_projectList();
+    this.props.get_projectList(this.props.user.id);
   }
 
   render() {
-    const { projects } = this.props
-    console.log("==>KanbanBoard render props:", projects)
+    const { projects, user } = this.props
+    console.log("==>KanbanBoard render props:", projects, user)
 
     return (
       <div style={{ width: '100%' }}>
@@ -58,7 +59,7 @@ class KanbanBoard extends Component {
         <br />
         {this.renderKanban()}
 
-        {projects.open ? <CreateKanbanBoard open={projects.open} project_id={projects.newPjtId} /> : null}
+        {projects.open ? <CreateKanbanBoard open={projects.open} project_id={projects.newPjtId} user={this.props.user} /> : null}
       </div>
     )
   }
@@ -71,7 +72,7 @@ const mapStateToProps = state => ({
 
 
 const dispatchToProps = (dispatch) => ({
-  get_projectList: () => dispatch(get_projectList('1')),
+  get_projectList: (user_id) => dispatch(get_projectList(user_id)),
 
 })
 

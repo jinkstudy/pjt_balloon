@@ -14,13 +14,13 @@ class ChatFull extends Component {
 
     componentDidMount() {
         console.log("chatfull componentDidMount()", this.props.member)
-        this.props.get_chatlist('홍길자')
+        this.props.get_chatlist(this.props.user.name)
     }
 
 
     render() {
 
-        const { chats } = this.props
+        const { chats, user } = this.props
         console.log("chatfull render props", chats)
 
         return (
@@ -28,10 +28,11 @@ class ChatFull extends Component {
                 <div className="chat_outerContainer">
 
                     <div className="chat_chatlistContainer">
-                        <Chatlist chats={chats} />
+                        <Chatlist chats={chats} user={this.props.user} />
                     </div>
-                    <Route exact path='/chat' component={Chat} />
-                    {/* <Route exact path='/chat' render={(props) => <Chat {...props} chats={chats} />} /> */}
+                    {/* <Route exact path='/chat/:userid' component={Chat}  /> */}
+                    <Route exact path='/chat/:userid' render={(props) => <Chat {...props} user={user} />} />
+
 
                 </div>
             </Router>

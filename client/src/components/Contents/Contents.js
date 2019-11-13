@@ -13,19 +13,25 @@ import ChatFull from '../Chat/ChatFull';
 class Contents extends Component {
 
     render() {
-        console.log("Contents render==>", this.props.member)
+        console.log("Contents render==>", this.props.user)
         return (
             <div style={{ minHeight: '100%', display: 'flex' }}>
 
                 {/* <KanbanBoard /> */}
                 <Router>
-                    < Sidebar />
+                    < Sidebar user={this.props.user} />
 
                     <Switch>
-                        <Route exact path="/" component={KanbanBoard} />
-                        <Route path="/kanban" component={KanbanBoard} />
-                        <Route path="/chat" component={ChatFull} />
-                        <Route path="/config" component={ConfigScreen} />
+                        <Route exact path="/" render={(props) => <KanbanBoard {...props} user={this.props.user} />} />
+
+                        <Route path="/kanban/:userid" render={(props) => <KanbanBoard {...props} user={this.props.user} />} />
+                        <Route path="/chat/:userid" render={(props) => <ChatFull {...props} user={this.props.user} />} />
+                        <Route path="/config/:userid" render={(props) => <ConfigScreen {...props} user={this.props.user} />} />
+
+                        {/* <Route exact path="/" component={KanbanBoard} /> */}
+                        {/* <Route path="/kanban" component={KanbanBoard} /> */}
+                        {/* <Route path="/chat/" component={ChatFull} />
+                        <Route path="/config/" component={ConfigScreen} /> */}
                     </Switch>
 
 
@@ -37,7 +43,7 @@ class Contents extends Component {
     }
 }
 const mapStateToProps = state => ({
-    member: state.members.member,
+    //member: state.members.member,
 })
 
 export default connect(mapStateToProps)(Contents);

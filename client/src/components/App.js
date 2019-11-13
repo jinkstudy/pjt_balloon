@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      session: ''
+      user: ''
 
     }
   }
@@ -27,9 +27,9 @@ class App extends Component {
     checkSession()
       .then(function (response) {
         if (response) {
-          //  console.log("^^^^^", response.payload)
+          console.log("^^^^^", response.payload)
           this.setState({
-            session: response.payload
+            user: response.payload
           })
         }
 
@@ -37,11 +37,13 @@ class App extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    const { dispatch } = this.props
     console.log("App shouldComponentUpdate", nextProps)
     if (nextProps.member !== this.props.member) {
 
       this.props.dispatch(setUser(nextProps.member))
       this.checkClientSession()
+      //  dispatch(checkSession)
     }
 
 
@@ -51,12 +53,12 @@ class App extends Component {
 
   render() {
     //console.log("APP render", this.props, this.state)
-    const { dispatch, member } = this.props;
+    const { dispatch, member, user } = this.props;
     dispatch(checkSession)
-    console.log("APP render", member !== '', member, "session=>", this.state.session)
+    console.log("APP render", member, "session=>", this.state.user, "props", user)
     return (
       <div>
-        {this.state.session ? <Contents /> : <LoginForm />}
+        {this.state.user ? <Contents user={this.state.user} /> : <LoginForm />}
 
       </div>
 
@@ -65,6 +67,7 @@ class App extends Component {
 }
 const mapStateToProps = state => ({
   member: state.members.member,
+  user: state.members.user
 })
 
 

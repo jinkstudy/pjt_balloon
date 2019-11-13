@@ -22,13 +22,16 @@ class CreateKanbanBoard extends Component {
     handleStart = (e) => {
         console.log("handleStart 호출")
         e.preventDefault();
-        const { dispatch } = this.props
+        const { dispatch, user } = this.props
         let data = {
             id: e.target.id.value,
             name: e.target.name.value,
-            type: e.target.type.value
+            type: e.target.type.value,
+            member: e.target.inviteList.value,
+            userid: user.id
 
         }
+        console.log(data)
 
         if (data.id !== '' && data.name !== '' && data.type !== '') {
             fetch('/newProject', {
@@ -42,7 +45,7 @@ class CreateKanbanBoard extends Component {
             })
                 .then(data => console.log(data))
                 .then(dispatch(cancel_newProject()))
-                .then(dispatch(get_projectList('1')))
+                .then(dispatch(get_projectList(data.userid)))
                 .then(dispatch(change_projectId(data.id)))
                 .catch(error => console.log(error));
 

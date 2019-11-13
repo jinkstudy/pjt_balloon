@@ -40,6 +40,7 @@ const Chat = ({ chats, location, get_chatlist }) => {
   //when render
   useEffect(() => {
     get_chatlist(name)
+    // get_chatlist(user.name)
     console.log(chats)
     if (location.search) {
       const { name, room } = queryString.parse(location.search); //url param으로 부터 name/room 구하기.
@@ -82,8 +83,11 @@ const Chat = ({ chats, location, get_chatlist }) => {
   useEffect(() => {
     if (location.search) {
       socket.on("message", message => {
-        setMessages([...messages, message]);
-        updateMessge(room, message)
+        if (!messages.includes(message)) {
+          setMessages([...messages, message]);
+          updateMessge(room, message)
+        }
+
 
       });
       console.log("message emit", message)
