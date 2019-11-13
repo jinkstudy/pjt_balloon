@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
@@ -29,11 +29,76 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Options() {
+export default function Options({ user }) {
+
+
+
+
+
   const classes = useStyles();
   // 기존 회원 [설정 data] array 형식으로 DB에서 가져와서 React.useState 로 지정
-  const userPreferences = ["lang", "theme"];
-  const [checked, setChecked] = React.useState(userPreferences);
+  let userPreferences = ["lang", "theme"];
+  const [checked, setChecked] = useState(userPreferences);
+
+  // 회원 설정 db에서 가져오기.
+  const get_settings = () => {
+
+    console.log("Option get_settings", user.email)
+    fetch(`/getSetting/${user.email}`)
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (setting) {
+        // userPreferences = setting
+        setChecked(setting)
+      })
+    console.log(checked)
+  }
+
+  //변경 시 db에 설정값 update 하기
+  const updateSetting = (settingArray) => {
+    let settings = ""
+
+    // checked 배열  string화 
+    settingArray.map((setting, index) => {
+      settings = settings + setting
+      if (index < (settingArray.length - 1)) {
+        settings = settings + `\/`
+
+      }
+    })
+    let data = { settings: settings }
+
+    console.log("updateSetting data", data)
+
+    // update api 호출
+    fetch(`/updateSetting/${user.email}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: "same-origin",
+      credentials: 'include',
+      body: JSON.stringify(data)
+
+    }
+    ).then(res => console.log(res))
+
+  }
+
+  //mount 시 초기 db 설정 값 가져오기.
+  useEffect(() => {
+    get_settings()
+  }, [])
+
+  //onclick시 handleToggle 수행 및 db 업데이트.
+  const onClickToggle = () => {
+    handleToggle("theme")
+
+
+  }
+
   // 설정 페이지에서 toggle 이벤트 발생시 호출되는 함수
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
@@ -101,7 +166,9 @@ export default function Options() {
       }
     }
     // 옵션 리스트 매개변수로 각 Component에 보내어 반영
+
     setChecked(newChecked);
+    updateSetting(newChecked);
     console.log(newChecked);
   };
 
@@ -120,7 +187,7 @@ export default function Options() {
           <ListItemSecondaryAction>
             <Switch
               edge="end"
-              onChange={handleToggle("theme")}
+              onChange={onClickToggle}
               checked={checked.includes("theme")}
               inputProps={{ "aria-labelledby": "switch-list-label-theme" }}
             />

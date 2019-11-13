@@ -55,11 +55,11 @@ router.get('/api/chats/:member', function (req, res) {
 });
 
 //몽고db에 새로운 chatList 입력하기
-router.post('/api/chats', function (req, res) {
+router.post('/api/newChats', function (req, res) {
     var chat = new Chat();
     chat.room_id = "room_1";
     chat.users = ["홍길자", "진경"];
-    chat.messages = [{ user: "진경", message: "입력test", date: Date.now }, { user: "홍길자", message: "입력test111", date: Date.now }];
+    chat.messages = [];
 
     chat.save(function (err) {
         if (err) {
@@ -83,17 +83,6 @@ router.put('/api/messageUpdate/:room_id', function (req, res) {
         if (!output.n) return res.status(404).json({ error: 'book not found' });
         res.json({ message: 'chat updated' });
     })
-
-
-
-    // Chat.findByIdAndUpdate(
-    //     { room_id: "room_1" },
-    //     { $push: { "messages": { user: title, msg: msg } } },
-    //     { safe: true, upsert: true, new: true },
-    //     function (err, model) {
-    //         console.log(err);
-    //     }
-    // );
 });
 
 
@@ -327,6 +316,14 @@ router.post('/api/customers', (req, res) => {
             console.log(err)
         }
     })
+    let settings = "lang\/theme"
+    mysqlConnection.query("insert into member_settings(member_email,settings) values (?, ?)", [body.email, settings], (err, result) => {
+        if (!err) {
+            console.log('설정추가성공')
+        } else {
+            console.log(err)
+        }
+    })
 })
 
 // 로그인
@@ -402,6 +399,44 @@ router.post('/logout', (req, res) => {
         res.redirect('/');
     }
 })
+
+//setting 값 가져오기
+router.get('/getSetting/:email', (req, res) => {
+    mysqlConnection.query(`select settings from member_settings where member_email=?`, [req.params.email],
+        (err, rows, fields) => {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                let setting = rows[0].settings.split('/')
+                console.log(setting)
+                res.json(setting)
+
+            }
+        })
+})
+
+//setting 값 변경 시 update 하기
+router.put('/updateSetting/:email', (req, res) => {
+    mysqlConnection.query(`update member_settings set settings = ? where member_email=?`, [req.body.settings, req.params.email],
+        (err, results) => {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                console.log(results)
+
+                res.json(results)
+
+            }
+        })
+})
+
+
+
+
+
+
 
 
 

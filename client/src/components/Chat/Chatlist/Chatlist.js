@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Chatlistitem from './Chatlistitem';
 import "./chatlist.css";
+import Addressbook from './Addressbook';
 
 import { Button, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, Typography } from "@material-ui/core";
 
@@ -57,7 +58,7 @@ const Chatlist = ({ chats, user }) => {
           <div className="listitem">
             <ListItem>
               <ListItemText primary="New Chat" />
-              <Button>plus</Button>
+              <Addressbook />
             </ListItem>
           </div>
           <Divider style={styles.divider} />

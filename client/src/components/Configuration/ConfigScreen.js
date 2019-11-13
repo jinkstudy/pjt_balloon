@@ -22,6 +22,8 @@ class ConfigScreen extends Component {
     console.log(wichMenu)
     return (wichMenu)
   }
+
+
   render() {
     const { user } = this.props
     console.log("ConfigScreen user", user)
