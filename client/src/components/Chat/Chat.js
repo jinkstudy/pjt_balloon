@@ -30,7 +30,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
   const [messages, setMessages] = useState([]);
   const [chatlists, setChatlists] = useState([]);
 
-  const ENDPOINT = "http://localhost:5000"; //server 주소
+  const ENDPOINT = "http://192.168.0.117:5000"; //server 주소
 
 
   // react-hook, componentDidMount, componentDidUpdate 역할
