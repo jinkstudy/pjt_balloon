@@ -49,7 +49,7 @@ mongoose.connect(`mongodb://${'balloon'}:${'balloon'}@localhost:27017/admin`, { 
 router.get('/api/chats/:member', function (req, res) {
     Chat.find({ users: req.params.member }, function (err, chats) {
         if (err) return res.status(500).send({ error: 'database failure' });
-        //console.log(chats)
+        console.log(chats)
         res.json(chats);
     })
 });
@@ -57,8 +57,8 @@ router.get('/api/chats/:member', function (req, res) {
 //몽고db에 새로운 chatList 입력하기
 router.post('/api/newChats', function (req, res) {
     var chat = new Chat();
-    chat.room_id = "room_1";
-    chat.users = ["홍길자", "진경"];
+    chat.room_id = req.body.room_name;
+    chat.users = req.body.users;
     chat.messages = [];
 
     chat.save(function (err) {
@@ -125,6 +125,68 @@ router.get('/getmember', (req, res) => {
                 const address = rows
                 res.json(rows)
                 // console.log(addressList)
+            }
+        })
+})
+
+// DB에서 회원 id가 포함된 주소록 멤버 아이디 가져오기 
+router.get('/getAddress/:memberid', (req, res) => {
+
+
+    mysqlConnection.query(`SELECT distinct project_id FROM project_members WHERE member_id =?`, [req.params.memberid],
+        (err, rows, fields) => {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                if (rows.length > 0) {
+                    let lists = rows;
+                    let addresLists = []
+
+
+                    lists.map(list => {
+
+
+                        // console.log(row.project_id)
+                        mysqlConnection.query(`select distinct pm.project_id as project_id,
+                             p.name as project_name, 
+                             pm.member_id as member_id,
+                             m.name as member_name
+                             from project_members as pm 
+                             join projects as p 
+                             on pm.project_id = p.id 
+                             join members as m 
+                             on m.id=pm.member_id 
+                             where pm.project_id=?`, [list.project_id], (err, rows1, fields) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                            else {
+                                // console.log(rows)
+                                let fullList = rows1
+                                console.log(row1)
+                                let address = {}
+                                let members = []
+                                fullList.map(member => {
+
+                                    members.push({ member_id: member.member_id, member_name: member.member_name })
+                                    address = { project_name: member.project_name, members: members }
+
+
+                                })
+                                console.log(address)
+
+                            }
+
+                        })
+
+                    }
+
+                    )
+                    res.send(addresLists)
+                }
+
+
             }
         })
 })
@@ -408,9 +470,12 @@ router.get('/getSetting/:email', (req, res) => {
                 console.log(err)
             }
             else {
-                let setting = rows[0].settings.split('/')
-                console.log(setting)
-                res.json(setting)
+                if (rows.length > 0) {
+                    let setting = rows[0].settings.split('/')
+                    console.log(setting)
+                    res.json(setting)
+                }
+
 
             }
         })

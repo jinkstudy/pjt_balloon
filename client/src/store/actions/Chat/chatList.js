@@ -5,8 +5,11 @@ export const get_chatlist = (member_id) => dispatch => {
     return (
         fetch(`/api/chats/${member_id}`)
             .then(function (response) {
+                if (response.length > 0) {
+                    return response.json()
+                }
 
-                return response.json()
+                else return []
             })
             .then(function (myJson) {
                 console.log("action get_chatlist myJson", myJson)

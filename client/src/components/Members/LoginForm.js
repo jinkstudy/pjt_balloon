@@ -234,13 +234,38 @@ class LoginForm extends Component {
       body: JSON.stringify(data)
     })
       .then(function (response) {
-        return response.json()
+        return response.json();
       })
       .then(function (myJson) {
-        return myJson.email
+        console.log(myJson.email);
+        return myJson.email;
       })
-      .then(dispatch(checkSession()))
+      .then(function (email) {
+        fetch("/api/checksession")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (sess) {
+            console.log(sess.email);
+            if (email === sess.email) {
+              return dispatch(setUser(sess.email));
+            }
+          });
+      }).then(setTimeout(function () {
+        dispatch(checkSession())
+      }, 1000))
+
       .catch(error => console.log(error))
+
+    // .then(function (response) {
+    //   return response.json()
+    // })
+    // .then(function (myJson) {
+    //   return myJson.email
+    // })
+    // .then(email => dispatch(setUser(email)))
+    // .then(dispatch(checkSession()))
+    // .catch(error => console.log(error))
 
   }
 
