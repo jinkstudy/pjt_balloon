@@ -47,7 +47,7 @@ class Addressbook extends Component {
 
   // 주소록 가져오기
   getaddress = (project_id) => {
-
+    fulladdresses=[]
     fetch(`/getAddress/${project_id}`)
       .then(response => response.json())
       .then(
@@ -68,9 +68,12 @@ class Addressbook extends Component {
 
   // 다이얼 열기
   handleClickOpen = () => {
+    checkboxvalue=[]
     this.setState({
       open: true
+
     });
+    checkboxvalue.push(this.props.user.name)
     console.log(this.state);
   };
 
@@ -83,7 +86,7 @@ class Addressbook extends Component {
   };
   // 체크박스 클릭
   handleCheckedValue = e => {
-    checkboxvalue.push(this.props.user.name)
+    
     if (e.target.checked == true) {
       if (!checkboxvalue.includes(e.target.value)) {
         checkboxvalue.push(e.target.value);
