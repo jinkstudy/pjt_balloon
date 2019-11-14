@@ -47,6 +47,7 @@ mongoose.connect(`mongodb://${'balloon'}:${'balloon'}@localhost:27017/admin`, { 
 // 몽고 db에서 chatList 가져오기
 
 router.get('/api/chats/:member', function (req, res) {
+    console.log(req.params.member)
     Chat.find({ users: req.params.member }, function (err, chats) {
         if (err) return res.status(500).send({ error: 'database failure' });
         console.log(chats)
@@ -129,26 +130,12 @@ router.get('/getmember', (req, res) => {
         })
 })
 
+
+
 // DB에서 회원 id가 포함된 주소록 멤버 아이디 가져오기 
-router.get('/getAddress/:memberid', (req, res) => {
-
-
-    mysqlConnection.query(`SELECT distinct project_id FROM project_members WHERE member_id =?`, [req.params.memberid],
-        (err, rows, fields) => {
-            if (err) {
-                console.log(err)
-            }
-            else {
-                if (rows.length > 0) {
-                    let lists = rows;
-                    let addresLists = []
-
-
-                    lists.map(list => {
-
-
-                        // console.log(row.project_id)
-                        mysqlConnection.query(`select distinct pm.project_id as project_id,
+router.get('/getAddress/:projectid', (req, res) => {
+    // console.log(row.project_id)
+    mysqlConnection.query(`select distinct pm.project_id as project_id,
                              p.name as project_name, 
                              pm.member_id as member_id,
                              m.name as member_name
@@ -157,39 +144,33 @@ router.get('/getAddress/:memberid', (req, res) => {
                              on pm.project_id = p.id 
                              join members as m 
                              on m.id=pm.member_id 
-                             where pm.project_id=?`, [list.project_id], (err, rows1, fields) => {
-                            if (err) {
-                                console.log(err)
-                            }
-                            else {
-                                // console.log(rows)
-                                let fullList = rows1
-                                console.log(row1)
-                                let address = {}
-                                let members = []
-                                fullList.map(member => {
+                             where pm.project_id=?`, [req.params.projectid], (err, rows, fields) => {
+        if (err) {
+            console.log(err)
+        }
+        else {
 
-                                    members.push({ member_id: member.member_id, member_name: member.member_name })
-                                    address = { project_name: member.project_name, members: members }
+            console.log(rows)
+            res.send(rows)
+            // let address = {}
+            // let members = []
+            // fullList.map(member => {
 
-
-                                })
-                                console.log(address)
-
-                            }
-
-                        })
-
-                    }
-
-                    )
-                    res.send(addresLists)
-                }
+            //     members.push({ member_id: member.member_id, member_name: member.member_name })
+            //     address = { project_name: member.project_name, members: members }
 
 
-            }
-        })
-})
+            // })
+            // console.log(address)
+
+        }
+
+    })
+
+}
+
+)
+
 
 
 

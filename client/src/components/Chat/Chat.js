@@ -20,7 +20,7 @@ let socket;
 // material ui styles def
 
 
-const Chat = ({ chats, location, get_chatlist }) => {
+const Chat = ({ chats, location, get_chatlist, user }) => {
 
   // "name","room"의 상태 값 정의
   const [name, setName] = useState("");
@@ -39,8 +39,8 @@ const Chat = ({ chats, location, get_chatlist }) => {
 
   //when render
   useEffect(() => {
-    get_chatlist(name)
-    // get_chatlist(user.name)
+    // get_chatlist(name)
+    get_chatlist(user.name)
     console.log(chats)
     if (location.search) {
       const { name, room } = queryString.parse(location.search); //url param으로 부터 name/room 구하기.
@@ -162,13 +162,14 @@ const Chat = ({ chats, location, get_chatlist }) => {
 
 const mapStateToProps = state => ({
   chats: state.chats,
+  user: state.members.user
 })
 
 const dispatchToProps = (dispatch) => ({
 
   get_chatlist: (member_id) => {
     dispatch(get_chatlist(member_id))
-    console.log("dispatch : get_chatlist =>", member_id)
+    console.log("chat dispatch : get_chatlist =>", member_id)
   },
 
 })

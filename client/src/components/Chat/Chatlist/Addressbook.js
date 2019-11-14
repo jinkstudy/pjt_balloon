@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import { get_chatlist } from '../../../store/actions/Chat/chatList'
 //material-ui import
 import { Typography, Button, DialogTitle, Dialog, Checkbox, FormControl, FormGroup, FormControlLabel, Divider, Grid, Fab } from "@material-ui/core";
 import CancelPresentationRoundedIcon from '@material-ui/icons/CancelPresentationRounded';
@@ -16,7 +17,7 @@ const styles = {
 
 //체크박스 임시 저장
 let checkboxvalue = [];
-
+let fulladdresses = [];
 class Addressbook extends Component {
 
   //constructor
@@ -31,20 +32,39 @@ class Addressbook extends Component {
   }
 
   componentDidMount() {
+    console.log("componentDidMount", this.props.projects)
     // render 와 동시에 주소록 가져오기
-    this.getaddress();
+    const { projects } = this.props;
+    if (projects.length > 0) {
+      projects.map(project => {
+        this.getaddress(project.project_id);
+      })
+    }
+
+
+    this.setState({ address: fulladdresses });
   }
 
   // 주소록 가져오기
-  getaddress = () => {
-    fetch("/getmember")
-      .then(test => test.json())
+  getaddress = (project_id) => {
+
+    fetch(`/getAddress/${project_id}`)
+      .then(response => response.json())
       .then(
-        function (address) {
-          this.setState({ address: address });
+        function (addresses) {
+          addresses.map(address => {
+            console.log(address.member_name, this.props.user.name)
+            if (address.member_name !== this.props.user.name) {
+              fulladdresses.push({ project_name: address.project_name, member_name: address.member_name })
+            }
+
+          })
+
         }.bind(this)
       );
   };
+
+
 
   // 다이얼 열기
   handleClickOpen = () => {
@@ -63,6 +83,7 @@ class Addressbook extends Component {
   };
   // 체크박스 클릭
   handleCheckedValue = e => {
+    checkboxvalue.push(this.props.user.name)
     if (e.target.checked == true) {
       if (!checkboxvalue.includes(e.target.value)) {
         checkboxvalue.push(e.target.value);
@@ -87,7 +108,7 @@ class Addressbook extends Component {
   addNewChat = (e) => {
     console.log("addNewChat 호출 ");
     e.preventDefault();
-
+    const { dispatch } = this.props
     let room_name = ""
     this.state.users.map((user, index) => {
       if (index < this.state.users.length - 1) {
@@ -116,22 +137,18 @@ class Addressbook extends Component {
       body: JSON.stringify(data)
 
     }).then(this.handleClose())
+      .then(dispatch(get_chatlist(this.props.user.name)))
 
   }
 
   render() {
-    let addresses = [
-      {
-        project_name: 'balloon', member_id: '1', member_email: 'bjk6858', member_name: '진경'
-      },
-      {
-        project_name: 'balloon', member_id: '2', member_email: 'oh', member_name: '민석'
-      },
-      {
-        project_name: 'balloon2', member_id: '3', member_email: 'oh2', member_name: '민석2'
-      },
 
-    ];
+    console.log("Addressbook render props projects", this.props.projects)
+
+
+
+    let addresses = this.state.address;
+    console.log(Object.values(this.state.address), typeof Object.values(this.state.address))
     return (
       <div className="addressbookContainer">
         <Button
@@ -169,7 +186,7 @@ class Addressbook extends Component {
 
                 {addresses.length !== 0
                   ? addresses.map(address => (
-                    <div style={{ display: 'flex', flexDirection: "row" }}>
+                    <div key={address.project_id} style={{ display: 'flex', flexDirection: "row" }}>
                       <Grid item xs={4}>
                         <Checkbox
                           style={styles.checkbox} // value=user.id
@@ -202,4 +219,18 @@ class Addressbook extends Component {
     );
   }
 }
-export default Addressbook;
+
+const mapStateToProps = state => ({
+  projects: state.projects.projectlists,
+  user: state.members.user
+})
+
+const dispatchToProps = (dispatch) => ({
+
+  get_chatlist: (member_id) => {
+    dispatch(get_chatlist(member_id))
+    console.log("Addressbook, dispatch : get_chatlist =>", member_id)
+  },
+
+})
+export default connect(mapStateToProps)(Addressbook);

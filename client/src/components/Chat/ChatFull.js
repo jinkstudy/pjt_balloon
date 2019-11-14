@@ -13,7 +13,7 @@ import { get_chatlist } from '../../store/actions/Chat/chatList'
 class ChatFull extends Component {
 
     componentDidMount() {
-        console.log("chatfull componentDidMount()", this.props.member)
+        console.log("chatfull componentDidMount()", this.props.user.name)
         this.props.get_chatlist(this.props.user.name)
     }
 
@@ -51,7 +51,7 @@ const dispatchToProps = (dispatch) => ({
 
     get_chatlist: (member_id) => {
         dispatch(get_chatlist(member_id))
-        console.log("dispatch : get_chatlist =>", member_id)
+        console.log("Chatfull dispatch : get_chatlist =>", member_id)
     },
 
 })
