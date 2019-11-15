@@ -17,7 +17,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import { connect } from "react-redux";
-import { checkSession } from "../../store/actions/members";
+import { checkSession, setUser } from "../../store/actions/members";
 
 const styles = {
   root: {
@@ -210,31 +210,46 @@ class LoginForm extends Component {
   // 로그인한 고객
   loginCustomer = () => {
     console.log(this.state);
-    const { dispatch } = this.props;
+    const { dispatch } = this.props
 
     let data = {
       email: this.state.email,
-      password: this.state.password
-    };
+      password: this.state.password,
+    }
 
-    fetch("/login", {
-      method: "post",
+    fetch('/login', {
+      method: 'post',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       mode: "cors",
-      credentials: "include",
+      credentials: 'include',
       body: JSON.stringify(data)
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(myJson) {
+      .then(function (myJson) {
+        console.log(myJson.email);
         return myJson.email;
       })
-      .then(email => dispatch(checkSession()))
-      .catch(error => console.log(error));
+      .then(function (email) {
+        fetch("/api/checksession")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (sess) {
+            console.log(sess.email);
+            if (email === sess.email) {
+              return dispatch(setUser(sess.email));
+            }
+          });
+      }).then(setTimeout(function () {
+        dispatch(checkSession())
+      }, 1000))
+
+      .catch(error => console.log(error))
   };
 
   render() {
