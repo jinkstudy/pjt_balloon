@@ -4,9 +4,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import ConfigMenu from "./ConfigMenu";
 import Options from "./Options";
-import Typography from "@material-ui/core/Typography";
 import PasswdChange from "./PasswdChange";
 import LogOut from "./LogOut";
+import Typography from "@material-ui/core/Typography";
 
 class ConfigScreen extends Component {
   constructor(props) {

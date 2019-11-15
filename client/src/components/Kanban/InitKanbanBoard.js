@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './InitKanbanBoard.css'
 import Logo from '../resources/icons/logo.png'
-import Project from '../resources/icons/project.png'
 import NewProject from '../resources/icons/new-project.png'
 import { connect } from 'react-redux';
 import { add_newProject } from '../../store/actions/Kanban/projectList';
+import Card from "@material-ui/core/Card";
+import { Divider, Typography } from '@material-ui/core';
+import FiberNewTwoToneIcon from '@material-ui/icons/FiberNewTwoTone';
+
+
 class InitKanbanBoard extends Component {
 
     newProjectId = () => {
@@ -42,29 +46,24 @@ class InitKanbanBoard extends Component {
     render() {
         return (
             <div>
-
-
-                <div className="form">
+                <Card className="form" style={{background: "#F9EFED"}}>
 
                     <div className="form-logo">
                         <img src={Logo} alt="logo" />
                     </div>
 
-                    <div className="form-project">
-                        <div className="img-project">
-                            <img src={Project} alt="project" />
-                        </div>
-                        <div className="content-project">
-                            Welcome back!<br />
-                            Please login to your account
-                            </div>
+                    <div className="form-project">                       
+                        <Typography variant='h7'>                        
+                            Welcome to your workspace!<br /><br />
+                            새 프로젝트를 생성하세요
+                            </Typography>
                     </div>
-
+                    <Divider/>
                     <div className="form-new-project">
                         <img style={{ cursor: 'pointer' }} src={NewProject} alt="new-project" onClick={this.handleClickOpen} />
                     </div>
 
-                </div>
+                </Card>
 
             </div>
         )

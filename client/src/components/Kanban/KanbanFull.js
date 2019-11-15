@@ -212,6 +212,11 @@ class KanbanFull extends Component {
 const mapStateToProps = state => ({
     kanbans: state.kanbans,
     projects: state.projects,
+
+
+
+
+
 })
 
 

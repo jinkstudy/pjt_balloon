@@ -55,6 +55,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
 
       chats.map(chat => {
         if (chat.room_id === room) {
+          
           setUsers(chat.users)
           setMessages(chat.messages)
         }
@@ -83,15 +84,31 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
   useEffect(() => {
     if (location.search) {
       socket.on("message", message => {
-        if (!messages.includes(message)) {
-          setMessages([...messages, message]);
+        get_chatlist(user.name)
+        setRoom(room);
+        //메세지 중복입력 방지
+        if (messages.length > 0) {
+          let last_msg = messages[messages.length - 1]
+
+
+          console.log(last_msg.user == message.user && last_msg.message == message.message)
+          if (!(last_msg.user == message.user && last_msg.message == message.message)) {
+
+            setMessages([...messages, message]);
+
+            updateMessge(room, message)
+          }
+          // console.log("message emit Chat", message)
+          //console.log("message emit Chat", messages)
+        } else {
+          setMessages([message])
           updateMessge(room, message)
         }
 
 
       });
-      console.log("message emit", message)
-      get_chatlist(name)
+     
+      get_chatlist(user.name)
       console.log(chats)
 
 
@@ -106,7 +123,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
       };
     }
 
-  }, [messages]);
+  }, [messages,room]);
 
 
   const updateMessge = (roomid, message) => {

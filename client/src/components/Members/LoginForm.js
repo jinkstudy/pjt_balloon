@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Logo from '../resources/icons/logo.png';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Logo from "../resources/icons/logo.png";
+import Intro from "../resources/welcome.mp4";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Fab from '@material-ui/core/Fab';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import { connect } from 'react-redux';
-import { setUser, checkSession } from '../../store/actions/members'
-
+import Fab from "@material-ui/core/Fab";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import { connect } from "react-redux";
+import { checkSession } from "../../store/actions/members";
 
 const styles = {
   root: {
@@ -26,7 +25,7 @@ const styles = {
   },
   background: {
     background: "#F9EFED",
-    padding: '25px'
+    padding: "25px"
   },
   textField: {
     background: "white"
@@ -34,13 +33,12 @@ const styles = {
   welcome: {
     background: "#F9EFED",
     padding: "10px",
-    border: 'none'
+    border: "none"
   },
-  image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center"
+  intro: {
+    marginLeft: "90px",
+    padding: "0px",
+    position: "absolute"
   },
   paper: {
     margin: "20px",
@@ -84,7 +82,7 @@ const styles = {
     width: "430px",
     height: "600px",
     background: "#F9EFED",
-    padding: '20px'
+    padding: "20px"
   },
 
   decisionForm: {
@@ -122,35 +120,32 @@ const styles = {
 };
 
 class LoginForm extends Component {
-
   // 생성자
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      email: '',
-      password: '',
-      name: '',
-    }
+      email: "",
+      password: "",
+      name: ""
+    };
   }
 
   // submit버튼이 눌려졌을 때 addCustomer함수를 호출한다.
-  handleFormSubmit = (e) => {
-    e.preventDefault()
+  handleFormSubmit = e => {
+    e.preventDefault();
 
-    this
-      .addCustomer()
+    this.addCustomer();
 
-    this
-      .setState({
-        open: false,
-        email: '',
-        password: '',
-        name: '',
-      })
-  }
+    this.setState({
+      open: false,
+      email: "",
+      password: "",
+      name: ""
+    });
+  };
 
-  // 추가할 생성자 
+  // 추가할 생성자
   addCustomer = () => {
     console.log("addCustomer 호출", this.state);
 
@@ -158,116 +153,89 @@ class LoginForm extends Component {
       email: this.state.email,
       password: this.state.password,
       name: this.state.name
-    }
-    console.log(data)
+    };
+    console.log(data);
 
-    fetch('/api/customers', {
-      method: 'POST',
+    fetch("/api/customers", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       mode: "same-origin",
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(data)
     })
       .then(data => console.log("입력 후 ", data))
       .catch(error => console.log("err", error));
-  }
+  };
 
   // 열기
   handleClickOpen = () => {
     this.setState({
       open: true
     });
-  }
+  };
 
   // 닫기
   handleClose = () => {
     this.setState({
       open: false
-    })
-  }
+    });
+  };
 
   // 입력값이 변경되었을 때
-  handleValueChange = (e) => {
+  handleValueChange = e => {
     let nextState = {};
 
-    // 이름값을 변경했을때 userName이 name이기때문에 userName이라는 실제 state에 반영한다.  
+    // 이름값을 변경했을때 userName이 name이기때문에 userName이라는 실제 state에 반영한다.
     nextState[e.target.name] = e.target.value;
 
     // nextState를 이용해서 현재 state값을 갱신해준다.
     this.setState(nextState);
-  }
+  };
 
   // 로그인 버튼이 눌렸을 때
-  handleLogin = (e) => {
+  handleLogin = e => {
     e.preventDefault();
-    const { dispatch } = this.props
-    this.loginCustomer()
+    const { dispatch } = this.props;
+    this.loginCustomer();
 
     this.setState({
-      email: '',
-      password: '',
-    })
-
-  }
+      email: "",
+      password: ""
+    });
+  };
 
   // 로그인한 고객
   loginCustomer = () => {
     console.log(this.state);
-    const { dispatch } = this.props
+    const { dispatch } = this.props;
 
     let data = {
       email: this.state.email,
-      password: this.state.password,
-    }
+      password: this.state.password
+    };
 
-    fetch('/login', {
-      method: 'post',
+    fetch("/login", {
+      method: "post",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       mode: "cors",
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(data)
     })
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
       })
-      .then(function (myJson) {
-        console.log(myJson.email);
+      .then(function(myJson) {
         return myJson.email;
       })
-      .then(function (email) {
-        fetch("/api/checksession")
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (sess) {
-            console.log(sess.email);
-            if (email === sess.email) {
-              return dispatch(setUser(sess.email));
-            }
-          });
-      }).then(setTimeout(function () {
-        dispatch(checkSession())
-      }, 1000))
-
-      .catch(error => console.log(error))
-
-    // .then(function (response) {
-    //   return response.json()
-    // })
-    // .then(function (myJson) {
-    //   return myJson.email
-    // })
-    // .then(email => dispatch(setUser(email)))
-    // .then(dispatch(checkSession()))
-    // .catch(error => console.log(error))
-
-  }
+      .then(email => dispatch(checkSession()))
+      .catch(error => console.log(error));
+  };
 
   render() {
     return (
@@ -275,8 +243,12 @@ class LoginForm extends Component {
         <CssBaseline />
 
         {/* 왼쪽 이미지 그리드 */}
-        <Grid item xs={false} sm={4} md={7} style={styles.image} />
-
+        <Grid item xs={false} sm={4} md={7} />
+        <div style={styles.intro}>
+          <video id="background-video" loop autoPlay>
+            <source src={Intro} type="video/mp4" />
+          </video>
+        </div>
         {/* 로그인 폼 그리드 */}
         <Grid
           item
@@ -296,10 +268,9 @@ class LoginForm extends Component {
 
             <Typography variant="h6" style={styles.welcome}>
               Welcome back!
-                <br />
+              <br />
               Please login to your account
-              </Typography>
-
+            </Typography>
 
             {/* 로그인 타이틀 */}
             <div style={styles.loginTitle}>

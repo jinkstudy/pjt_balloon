@@ -80,7 +80,7 @@ router.put('/api/messageUpdate/:room_id', function (req, res) {
 
     Chat.update({ room_id: req.params.room_id }, { $push: { messages: { user: req.body.user, message: req.body.message, date: new Date() } } }, (err, output) => {
         if (err) res.status(500).json({ error: 'database failure' });
-        console.log(output);
+        // console.log(output);
         if (!output.n) return res.status(404).json({ error: 'book not found' });
         res.json({ message: 'chat updated' });
     })

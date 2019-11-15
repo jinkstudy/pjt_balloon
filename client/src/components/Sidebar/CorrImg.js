@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
-import ProfileImg from '../resources/icons/profileIng.jpg';
+import ProfileImg from '../resources/icons/lock.png';
 
 const styles = {
     hidden: {
         display: 'none',
     },
+
     imgPreview: {
         width: '100%',
-        height: '120px'
+        height: '100%'
     },
+
     imgButton: {
         textAlign: 'center',
-        backgroundColor: '#e57076'
+        backgroundColor: '#e57076',
+        marginTop: '3px'
     },
+    
     img: {
         width: '100%',
         height: '100%',
@@ -26,47 +30,51 @@ class CorrImg extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: { ProfileImg },
+            file: '',
+            profile: '',
         }
     };
 
     handleFileChange = (e) => {
-        e.preventDefault();
-
-        let reader = new FileReader();
         let file = e.target.files[0];
 
+        // 비동기적으로 데이터를 읽기 위하여
+        let reader = new FileReader();
+
+        // 읽기 동작이 성공적으로 완료되었을 때
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                imagePreviewUrl: reader.result
+                profile: reader.result
             });
-            reader.readAsDataURL(file)
         }
+
+        // 읽을 객체 
+        reader.readAsDataURL(file)
     }
 
     render() {
 
-        let { imagePreviewUrl } = this.state;
-        let imagePreview = null;
-        if (imagePreviewUrl) {
-            imagePreview = (<img src={imagePreviewUrl} />);
-        } 
+        // 프로필 이미지가 없을 때
+        let uploadProfile = (<div className="previewImage"><img src={ProfileImg} alt="icon" style={styles.img} /></div>);
+
+        // 프로필 이미지가 있을 때
+        if (this.state.profile) {
+            uploadProfile = (<div className="image" ><img src={this.state.profile} alt="icon" style={styles.img} /></div>);
+        }
 
         return (
-            <div className="corrImg">
-                <div style={styles.imgPreview}>
-                    <img src={ProfileImg} alter="profileImg" style={styles.img}/>
-                </div>
+            <div className="corrImg" >
+                {uploadProfile}
 
                 <div style={styles.imgButton}>
-                <input style={styles.hidden} id="raised-button-file" type="file" file={this.state.file} onChange={this.handleFileChange} />
+                    <input style={styles.hidden} id="raised-button-file" type="file" file={this.state.file} onChange={this.handleFileChange} />
 
-                <label htmlFor="raised-button-file">
-                    <Button variant="contained" color="primary" style={styles.imgButton} component="span" name="file">
-                        사진수정
-                    </Button>
-                </label>
+                    <label htmlFor="raised-button-file">
+                        <Button variant="contained" color="primary" style={styles.imgButton} onClick={this.handleSubmit} component="span" name="file">
+                            사진수정
+                        </Button>
+                    </label>
                 </div>
             </div>
         )

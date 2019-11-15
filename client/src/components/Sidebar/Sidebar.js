@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./sidebar.css";
+// import {Logo-solo} from "../resources/icons/logo.png";
 
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -14,42 +15,57 @@ import MessageRoundedIcon from "@material-ui/icons/MessageRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-
-
+import Typography from "@material-ui/core/Typography";
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProjectInfo from './ProjectInfo';
-// import CorrImg from './CorrImg'
+import CorrImg from './CorrImg'
 
 const styles = {
   dividermax: {
-    backgroundColor: "#327D64",
+    backgroundColor: "#F8F0ED",
     width: "200px"
   },
+
   dividerlow: {
-    backgroundColor: "#327D64 "
+    backgroundColor: "#F8F0ED"
   },
+
   changebutton: {
     color: "white"
   },
 
   popup: {
-    padding: '5px',
-    width: '380px',
+    padding: '8px',
+    width: '370px',
     height: '100%',
-    backgroundColor: '#e57076'
+    backgroundColor: '#F8F0ED'
   },
+
   profile: {
-    backgroundColor: 'green',
     display: 'flex',
+    width: '100%',
+    height: '130px',
   },
   corrImg: {
-    width: '120px',
+    width: '140px',
   },
+
   myInfo: {
-    backgroundColor: 'orange',
+    width: '100%',
+    height: '100%',
   },
+
+  typForm: {
+    padding: '10px',
+    marginTop: '13px',
+  },
+  typ: {
+    color: 'pink',
+    fontWeight: 'bold',
+    fontSize: '25px',
+  }
 };
 
 
@@ -66,15 +82,9 @@ class Sidebar extends Component {
     }
   };
 
-
-
-
-
   // 기본 사이드바
   sidebarExpanded = () => (
-
-
-    < div className="sidebar" >
+    <div className="sidebar" >
       <div className="expanded">
         <Button
           style={styles.changebutton}
@@ -126,15 +136,18 @@ class Sidebar extends Component {
 
                         {/* 사진 수정 */}
                         <div style={styles.corrImg}>
-
-                          {/* <CorrImg /> */}
-
+                          <CorrImg email={this.props.user.email} />
                         </div> {/* 사진수정 끝 */}
 
                         {/* 내정보 */}
                         <div className="myInfo" style={styles.myInfo} >
-                          {this.props.user.email}
-                          {this.props.user.name}
+                          <div style={styles.typForm}>
+                            <Typography style={styles.typ}>
+                              {this.props.user.name} <br/>
+                              {this.props.user.email}
+                            </Typography>
+                            {/* <img src={Logo-solo}></img> */}
+                          </div>
                         </div>
 
 
@@ -151,20 +164,6 @@ class Sidebar extends Component {
             </PopupState>
           </div>
 
-
-
-
-          {/* <List>
-          <div className="listitem">
-
-            <ListItem button>
-              <AccountBoxRoundedIcon fontSize="large" />
-              <div className="listitemtext">
-                <ListItemText primary="Accounts" />
-              </div>
-            </ListItem>
-
-          </div> */}
           <Divider style={styles.dividermax} />
 
           <div className="listitem">
@@ -181,6 +180,7 @@ class Sidebar extends Component {
 
 
           <Divider style={styles.dividermax} />
+
           <div className="listitem">
             <Link to={`/chat/${this.props.user.id}`} style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem button>

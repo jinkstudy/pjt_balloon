@@ -9,40 +9,18 @@ import { setUser, checkSession } from '../store/actions/members'
 class App extends Component {
 
 
+  //11월14일 밤 변경부
+
   componentDidMount() {
     const { checkSession } = this.props;
     console.log("App componentDidMount", this.props)
-    // checkSession()
+    checkSession()
 
   }
 
-  checkClientSession = () => {
+  //11월14일 밤 변경부
 
-    // checkSession()
-    //   .then(function (response) {
-    //     if (response) {
-    //       console.log("^^^^^", response.payload)
-    //       this.setState({
-    //         user: response.payload
-    //       })
-    //     }
-
-    //   }.bind(this))
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const { checkSession, dispatch } = this.props
-    console.log("App shouldComponentUpdate", nextProps)
-    if (nextProps.user !== this.props.user) {
-
-      // dispatch(setUser(nextProps.member))
-      // checkSession()
-      //  dispatch(checkSession)
-    }
-
-
-    return true
-  }
+  
 
 
   render() {

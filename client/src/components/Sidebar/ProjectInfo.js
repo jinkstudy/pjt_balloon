@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ListProject from './ListProject';
-import { get_projectList } from '../../store/actions/Kanban/projectList';
 import { connect } from "react-redux";
 
 class ProjectInfo extends Component {
