@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Setting from '../resources/icons/setting.png'
+import Setting from '../resources/icons/logo-solo.png'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from "react-redux"
@@ -15,32 +15,32 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         padding: 10,
-        marginTop: 10
+        marginTop: 10,
+        marginLeft: 20
 
     },
 
-
-
     topBar: {
-        backgroundColor: '#4cc3c3',
+        backgroundColor: '#2E6985',
         height: 80
     },
 
     setting: {
         textAlign: "right",
         paddingTop: 20,
-        paddingRight: 10,
+        marginLeft: -40
 
     },
 
     settingImg: {
-        width: 40,
-        height: 40,
+        width: '35px',
+        height: '35px',
 
 
     },
     button: {
-        backgroundColor: '#4cc3c3',
+        backgroundColor: '#D15462',
+        marginLeft: '20pxs'
     }
 
 

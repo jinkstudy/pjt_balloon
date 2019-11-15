@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
-import Project from '../resources/icons/project.png'
+import Project from '../resources/icons/logo-solo.png'
 import { cancel_newProject, change_projectId, get_projectList } from '../../store/actions/Kanban/projectList'
 import { connect } from 'react-redux';
 import './CreateKanbanBoard.css'
@@ -48,14 +48,10 @@ class CreateKanbanBoard extends Component {
                 .then(dispatch(get_projectList(data.userid)))
                 .then(dispatch(change_projectId(data.id)))
                 .catch(error => console.log(error));
-
         }
-
     }
 
     render() {
-
-
         return (
             <div>
                 <Dialog open={this.props.open} onClose={this.handleClose}>
@@ -75,7 +71,7 @@ class CreateKanbanBoard extends Component {
                             <DialogContent>
                                 <div className="form-content-project">
                                     <div className="form-label">
-                                        <label>Project name</label><br />
+                                        <label>Project</label><br />
                                         <label>Type</label><br />
                                         <label>Invite</label>
                                     </div>

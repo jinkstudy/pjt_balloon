@@ -1,13 +1,15 @@
 .form-add{
-    width: 380px;
+    width: 360px;
     height: auto;
+    background: #F9EFED;
 }
 
 .form-add-project{
     display: flex;
     width: auto;
+    padding-top: 10px;
     margin-bottom: -10px;
-    margin-left: 20px;
+    margin-left: 55px;
 }
 
 .img-add-project{
@@ -21,8 +23,11 @@
 }
 
 .content-add-project{
-    margin-top: 7px;
+    margin-top: 15px;
     margin-left: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 24px;
+    font-weight: 550;
 }
 
 .input-project-name::placeholder{
@@ -78,7 +83,7 @@
 
 .form-button{
     display: flex;
-    margin: 2px;
+    padding-bottom: 30px;
     text-align: center;
     margin: 0 auto;
 }

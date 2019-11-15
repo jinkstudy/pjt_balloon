@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { add_newProject } from '../../store/actions/Kanban/projectList';
 import Card from "@material-ui/core/Card";
 import { Divider, Typography } from '@material-ui/core';
-import FiberNewTwoToneIcon from '@material-ui/icons/FiberNewTwoTone';
 
 
 class InitKanbanBoard extends Component {

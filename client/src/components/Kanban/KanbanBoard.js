@@ -54,7 +54,7 @@ class KanbanBoard extends Component {
     console.log("==>KanbanBoard render props:", projects, user)
 
     return (
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', background: '#A6A0A1' }}>
         <TopKanbanBoard pjtList={projects.projectlists} cnt={projects.cnt} />
         <br />
         {this.renderKanban()}

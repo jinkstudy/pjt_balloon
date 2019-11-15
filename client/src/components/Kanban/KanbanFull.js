@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Textarea from 'react-textarea-autosize'
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
+import { Paper } from '@material-ui/core'
 
 const ListContainer = styled.div`
     display: flex;
@@ -15,9 +16,7 @@ const ListContainer = styled.div`
     justify-content: center;
     width : 100%;
     max-width:1300px;
-    
-    
-    
+       
 `;
 const styles = {
 
@@ -31,7 +30,7 @@ const styles = {
     //ADD CARD, CANCEL 버튼 관련
     formButtonGroup:
     {
-        marginTop: 8,
+        marginTop: 12,
         display: "flex",
         justifyContent: 'center',
     }
@@ -88,7 +87,7 @@ class KanbanFull extends Component {
     // inputFrom 렌더링
     addInputForm = () => {
         console.log("addInputForm 호출")
-        const placeholder = "Enter a title for this card..."
+        const placeholder = "새 작업의 제목"
 
         return (
             <div >
@@ -115,7 +114,7 @@ class KanbanFull extends Component {
 
                             variant="contained" style={{
                                 color: "white", backgroundColor: "#5aac44", marginRight: 4, marginLeft: 4
-                            }}>ADD List</Button>
+                            }}>ADD LIST</Button>
 
                         <Button
                             onMouseDown={this.closeForm}
@@ -168,14 +167,16 @@ class KanbanFull extends Component {
         return (
             <div >
 
-                {projects.projectlists ? <h1 style={{ textAlign: "center" }}>{this.getTitle(projects.projectlists, project_id)}</h1> : null}
+                {projects.projectlists ? <Paper style={{ opacity: "0.6" }}><h1 style={{ textAlign: "center", padding: "10px" }}>{this.getTitle(projects.projectlists, project_id)}</h1></Paper> : null}
 
                 <div style={{ marginBottom: 8, marginRight: 20, textAlign: 'right' }} >
+                    
                     <Fab onClick={this.openForm} variant="extended" size="medium" color="secondary"
                         aria-label="add">
                         <AddIcon />
                         New List
                      </Fab>
+                     
 
                 </div>
 
@@ -184,8 +185,8 @@ class KanbanFull extends Component {
 
                     <ListContainer>
                         {(kanbans[0].category === 'No List yet') ?
-                            <h2> No List yet {<br />}
-                                Make your List </h2> :
+                            <h2>There is no list yet :) {<br/>}
+                                새로운 리스트와 카드를 작성하세요 </h2> :
                             kanbans.map((kanban, index) =>
                                 <KanbanList listId={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
                             )
