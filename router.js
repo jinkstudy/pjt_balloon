@@ -98,7 +98,7 @@ router.get('/', (req, res) => {
 //mysql연결
 var mysqlConnection = mysql.createConnection(
     {
-        host: 'localhost', //'192.168.0.117'
+        host: '192.168.0.117', //'192.168.0.117'
         user: 'balloon',
         password: 'balloon',
         database: 'balloonDB'
