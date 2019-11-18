@@ -4,6 +4,7 @@ import { get_chatlist } from '../../../store/actions/Chat/chatList'
 //material-ui import
 import { Typography, Button, DialogTitle, Dialog, Checkbox, FormControl, FormGroup, FormControlLabel, Divider, Grid, Fab } from "@material-ui/core";
 import CancelPresentationRoundedIcon from '@material-ui/icons/CancelPresentationRounded';
+
 //style 
 const styles = {
   checkbox: {
@@ -12,6 +13,7 @@ const styles = {
   },
   buttonstyle: {
     marginLeft: '300px',
+    padding: '10px'
   }
 };
 
@@ -153,15 +155,15 @@ class Addressbook extends Component {
     let addresses = this.state.address;
     console.log(Object.values(this.state.address), typeof Object.values(this.state.address))
     return (
-      <div className="addressbookContainer">
+      <div className="addressbookContainer" style={{background: "#D15462"}}>
         <Button
           variant="outlined"
           aria-label="signup"
           onClick={this.handleClickOpen}
         >
-          PLUS
+          NEW
         </Button>
-        <Dialog open={this.state.open} onClose={this.handleClose}>
+        <Dialog open={this.state.open} onClose={this.handleClose} style={{padding: "10px"}}>
           <Grid container spacing={1} style={{ width: 400 }}>
             <Grid item xs={12}>
               <DialogTitle>

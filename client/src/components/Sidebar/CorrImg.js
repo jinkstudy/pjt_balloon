@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
-import ProfileImg from '../resources/icons/lock.png';
+import ProfileImg from '../resources/icons/ninja.png';
 
 const styles = {
     hidden: {
         display: 'none',
+    },
+    corrImg: {
+        padding: '20px',
     },
 
     imgPreview: {
@@ -15,14 +18,22 @@ const styles = {
     },
 
     imgButton: {
+        width: '110%',
         textAlign: 'center',
         backgroundColor: '#e57076',
-        marginTop: '3px'
+        marginTop: '3px',
+        fontSize: '9px',
+        borderRadius: '5px',
+        marginLeft: '10px',
     },
     
     img: {
         width: '100%',
         height: '100%',
+        marginTop: '10px',
+        marginLeft: '10px',
+        fontSize: '10px',
+        fontColor: 'black'
     },
 }
 
@@ -67,7 +78,7 @@ class CorrImg extends Component {
             <div className="corrImg" >
                 {uploadProfile}
 
-                <div style={styles.imgButton}>
+                <div>
                     <input style={styles.hidden} id="raised-button-file" type="file" file={this.state.file} onChange={this.handleFileChange} />
 
                     <label htmlFor="raised-button-file">
