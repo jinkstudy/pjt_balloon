@@ -30,7 +30,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
   const [messages, setMessages] = useState([]);
   const [chatlists, setChatlists] = useState([]);
 
-  const ENDPOINT = "http://192.168.0.117:5000"; //server 주소
+  const ENDPOINT = "http://localhost:5000"; //server 주소
 
 
   // react-hook, componentDidMount, componentDidUpdate 역할
@@ -55,7 +55,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
 
       chats.map(chat => {
         if (chat.room_id === room) {
-          
+
           setUsers(chat.users)
           setMessages(chat.messages)
         }
@@ -107,7 +107,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
 
 
       });
-     
+
       get_chatlist(user.name)
       console.log(chats)
 
@@ -123,7 +123,7 @@ const Chat = ({ chats, location, get_chatlist, user }) => {
       };
     }
 
-  }, [messages,room]);
+  }, [messages, room]);
 
 
   const updateMessge = (roomid, message) => {

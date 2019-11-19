@@ -234,18 +234,7 @@ class LoginForm extends Component {
         console.log(myJson.email);
         return myJson.email;
       })
-      .then(function (email) {
-        fetch("/api/checksession")
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (sess) {
-            console.log(sess.email);
-            if (email === sess.email) {
-              return dispatch(setUser(sess.email));
-            }
-          });
-      }).then(setTimeout(function () {
+      .then(setTimeout(function () {
         dispatch(checkSession())
       }, 1000))
 

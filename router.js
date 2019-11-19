@@ -36,7 +36,7 @@ db.once('open', function () {
     console.log("Connected to mongod server");
 });
 
-mongoose.connect(`mongodb://192.168.0.117:27017/admin`, { dbName: 'mongochat' }, (error) => {
+mongoose.connect(`mongodb://localhost:27017/admin`, { dbName: 'mongochat' }, (error) => {
     if (error) {
         console.log('몽고디비 연결 에러', error);
     } else {
@@ -98,7 +98,7 @@ router.get('/', (req, res) => {
 //mysql연결
 var mysqlConnection = mysql.createConnection(
     {
-        host: '192.168.0.117', //'192.168.0.117'
+        host: 'localhost', //'192.168.0.117'
         user: 'balloon',
         password: 'balloon',
         database: 'balloonDB'

@@ -15,35 +15,6 @@ const styles = {
 
 
 const Chatlist = ({ chats, user }) => {
-
-  // const [chatlists, setChatlists] = useState([]);
-
-  // useEffect(() => {
-  //   getChatList('홍길자')
-
-
-  //   //console.log("getChatList  후 state", chatlists.length, chatlists)
-
-
-
-  // }, [chatlists]);
-
-  // const getChatList = (memberid) => {
-
-  //   console.log("chat getChatList")
-  //   fetch(`/api/chats/${memberid}`)
-  //     .then(function (response) {
-  //       return response.json()
-  //     })
-  //     .then(function (myJson) {
-  //       // console.log(myJson)
-  //       if (chatlists.length === 0) {
-  //         return (setChatlists(myJson))
-  //       }
-  //     })
-
-  // }
-
   return (
 
     <div className="chatlist">
